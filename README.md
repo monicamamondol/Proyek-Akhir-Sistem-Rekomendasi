@@ -77,6 +77,27 @@ File `Users.csv` :
 
 ### Variable - variable pada dataset 
 
+Kolom datasets books memiliki informasi berikut:
+* **`ISBN`:** Nomor identifikasi unik untuk setiap buku (standar internasional).
+* **`Book-Title`:** Judul lengkap buku.
+* **`Book-Author`:** Nama penulis buku.
+* **`Year-Of-Publication`:** Tahun terbit buku.
+* **`Publisher`:** Nama penerbit buku.
+* **`Image-URL-S`:** URL gambar sampul buku dengan ukuran (Small).
+* **`Image-URL-M`:** URL gambar sampul buku dengan ukuran (Medium).
+* **`Image-URL-L`:** URL gambar sampul buku dengan ukuran (Large).
+
+Kolom datasets ratings memiliki informasi berikut:
+* **`User-ID`:** Identifikasi unik untuk setiap pengguna yang memberikan rating.
+* **`ISBN`:** Nomor identifikasi buku yang dirating, terkait dengan dataset books.
+* **`Book-Rating`:** Nilai rating yang diberikan pengguna untuk buku tertentu.
+
+Kolom datasets users memiliki informasi berikut:
+* **`User-ID`:** Identifier unik untuk setiap pengguna, sama dengan kolom User-ID di dataset ratings.
+* **`Location`:** Lokasi pengguna dalam format "kota, negara bagian, negara".
+* **`Age`:** Usia pengguna dalam tahun.
+
+Pada model kali ini dataset yang digunakan adalah file `Books.csv`, dan `Ratings.csv`.
 
 
 ## Referensi 
