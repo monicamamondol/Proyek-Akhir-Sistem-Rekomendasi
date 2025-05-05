@@ -76,7 +76,6 @@ File `Users.csv` :
 - Tidak ada data yang duplikat. 
 
 ### Variable - variable pada dataset 
-
 Kolom datasets books memiliki informasi berikut:
 * **`ISBN`:** Nomor identifikasi unik untuk setiap buku (standar internasional).
 * **`Book-Title`:** Judul lengkap buku.
@@ -98,6 +97,143 @@ Kolom datasets users memiliki informasi berikut:
 * **`Age`:** Usia pengguna dalam tahun.
 
 Pada model kali ini dataset yang digunakan adalah file `Books.csv`, dan `Ratings.csv`.
+
+### EDA - Univariate Analysis
+
+![Univariate Analysis](https://i.ibb.co.com/PsjGVmtg/Screenshot-2025-05-05-200402.png)
+Gambar 1. Analisis Univariat
+- Dominasi era 1980–2005: Sebagian besar buku dalam dataset diterbitkan setelah tahun 1980, dengan puncaknya sekitar tahun 2000. 
+- Jumlah buku meningkat drastis sejak tahun 1980, artinya data buku yang tersedia lebih lengkap atau penerbitan buku memang meningkat di era itu.
+
+![Univariate Analysis](https://i.ibb.co/LdswNQz4/Screenshot-2025-05-05-200429.png)
+Gambar 2. Analisis Univariat
+- Harlequin adalah penerbit paling produktif dalam dataset ini, dengan lebih dari 7.000 buku. Ini menunjukkan Harlequin mendominasi koleksi.
+
+
+![Univariate Analysis](https://i.ibb.co.com/8nvqG5KK/Screenshot-2025-05-05-200500.png)
+Gambar 3. Analisis Univariat
+- Agatha Christie menempati peringkat pertama dengan hampir 600 buku. Ini sangat mungkin karena banyak edisi, terjemahan, atau publikasi ulang karya-karyanya.
+
+![Univariate Analysis](https://i.ibb.co.com/7xMC1MCn/Screenshot-2025-05-05-200727.png)
+Gambar 4. Analisis Univariat
+- Mayoritas data rating berasal dari perilaku implisit. Ini umum terjadi karena pengguna sering tidak memberi rating secara manual, tetapi interaksi mereka tetap bernilai.
+
+### EDA - Multivariate Analysis
+
+![Multivariate Analysis](https://i.ibb.co.com/fV6M0qxz/Screenshot-2025-05-04-174620.png)
+Gambar 5. Analisis Multivariat
+- User-ID (kiri atas) :  Distribusi user cukup merata, artinya tidak ada dominasi dari user tertentu. Ini mengindikasikan banyak user aktif memberikan rating, tidak hanya segelintir.
+- Book-Rating (kanan bawah) : Terdapat puncak sangat tinggi di nilai 0, menunjukkan banyak rating 0 — kemungkinan ini adalah rating implisit (tanpa penilaian sebenarnya). Rating lainnya (1–10) tersebar relatif merata, dengan sedikit lonjakan di nilai tinggi (8, 9, 10).
+- Scatter Plot antara User-ID dan Book-Rating (bagian luar diagonal) etiap user dapat memberikan rating dari 0 sampai 10. 
+- Tidak terlihat hubungan korelasi kuat antara User-ID dan Book-Rating (memang seharusnya tidak ada).
+
+
+## Data Preparation (Content Based Filtering)
+
+Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling machine learning. Tanpa persiapan yang baik, model cenderung tidak akurat atau tidak stabil karena adanya masalah seperti missing values, ketidakseimbangan data, atau skala data yang berbeda-beda.
+- Pada dataset `Books.csv` dan `Users.csv` ada missing value, dan duplikat.
+- `dropna()` untuk menghapus baris dengan missing value.
+- `duplicated().sum()` untuk deteksi.
+
+| No  | Langkah                   | Tujuan / Alasan                                      |
+|-----|---------------------------|-----------------------------------------------------|
+| 1   | Rename Kolom pada Dataset | Proses ini mengubah nama kolom agar lebih konsisten dan sesuai dengan konvensi penamaan Python (snake_case). |
+| 2   | Sampling Dataset           | Karena ukuran data yang besar, dilakukan pengambilan sebagian data (subset) untuk mempermudah proses eksplorasi dan pemodelan awal.        |
+| 3   | Menghapus Data yang Mengandung Nilai Kosong (NaN)  | Menghapus baris yang memiliki nilai kosong mencegah error atau bias saat analisis dan pemodelan.              |
+| 4   | Mengekstrak Kolom Menjadi List         | Ini memudahkan dalam proses pencocokan informasi buku berdasarkan ISBN atau fitur lainnya pada tahap berikutnya.               |
+| 5   | Membuat Dictionary dari List         | Dictionary ini digunakan untuk menghubungkan ISBN dengan informasi buku seperti judul, penulis, dan tahun terbit.     |
+
+## Data Preparation (Collaborative Filtering)
+- `Label Encoding` Mengubah ID user dan buku (string/unique identifier) menjadi integer.
+- `Min-Max Scaling` Mengubah skala rating ke range [0, 1].
+- `Random Sampling` Mengacak dataset sebelum dibagi.
+- `Split 70-30` 70% data latih, 30% data validasi.
+- `Numpy Array Conversion` Mengubah dataframe menjadi array numpy.
+
+| No  | Langkah                   | Tujuan / Alasan                                      |
+|-----|---------------------------|-----------------------------------------------------|
+| 1   | Encoding ID | Mengubah data kategorikal (ID) menjadi numerik untuk diproses model. |
+| 2   | Normalisasi Rating           | Menstabilkan pelatihan model dan memastikan output dalam range yang valid.        |
+| 3   | Pembagian Dataset  | 	Evaluasi model pada data yang tidak pernah dilihat selama pelatihan.              |
+| 4   | Konversi ke Array        | Optimasi komputasi dengan format yang compatible dengan TensorFlow/Keras.        |
+
+
+## Modeling
+- Sistem rekomendasi ini dibangun untuk membantu pengguna menemukan buku yang relevan berdasarkan dua pendekatan: 
+-- `Content-Based Filtering` : Rekomendasi berdasarkan kesamaan konten buku (judul).
+-- `Collaborative Filtering` : Rekomendasi berdasarkan preferensi pengguna lain. 
+
+1. **Solusi 1: Content-Based Filtering**
+- Menggunakan TF-IDF Vectorizer untuk mengubah judul buku menjadi vektor numerik.
+- output matriks TF-IDF: `(10000, 11486)  # 10.000 buku dengan 11.486 fitur kata unik`. 
+- Cosine Similarity digunakan untuk menghitung kemiripan antar buku.
+- similarity matrix: `array([[1.0, 0.0, 0.0, ...],
+       [0.0, 1.0, 0.0, ...],
+       ...])`
+- Fungsi `get_recommendations()` menghasilkan 10 buku teratas dengan judul mirip. 
+- rekomendasi untuk "Cradle and All":
+![gambar](https://i.ibb.co/B0rcWFn/Screenshot-2025-05-05-220507.png)
+- `Kelebihan` : Tidak memerlukan data rating, rekomendasi spesifik berdasarkan konten buku.
+- `Kekurangan` : Tidak mempertimbangkan preferensi pengguna, Terbatas pada kesamaan kata dalam judul.
+
+2. **Solusi 2: Collaborative Filtering**
+- Menggunakan RecommenderNet (Custom Keras Model) dengan: Embedding layer untuk user dan buku. Dot product untuk memprediksi rating. 
+`class RecommenderNet(tf.keras.Model):
+    def __init__(self, num_users, num_book, embedding_size):
+        self.user_embedding = layers.Embedding(num_users, embedding_size)
+        self.book_embedding = layers.Embedding(num_book, embedding_size)
+        ...`
+- Loss: Binary Crossentropy.
+- Optimizer: Adam.
+- Metrik: RMSE.
+- Hasil pelatihan: `Epoch 20/20 - RMSE: 0.2290 (train), 0.3481 (val)`
+- Prediksi rating untuk buku yang belum dibaca oleh user.
+- output untuk user 278194:
+![gambar](https://i.ibb.co.com/WvPwp6Hb/Screenshot-2025-05-05-221409.png)
+
+## Evaluation
+Metrik Evaluasi yang Digunakan :
+- `Content-Based Filtering` : Precision@K dan Recall@K
+- `Collaborative Filtering` : Root Mean Squared Error (RMSE)
+
+A. **Content-Based Filtering (Precision@5 dan Recall@5)**
+Hasil: 
+- Precision@5 = 0.40: 2 dari 5 rekomendasi relevan.
+- Recall@5 = 0.67: 2 dari 3 item relevan terdeteksi.
+
+Formula:
+- Precision@K:
+![gambar](https://i.ibb.co.com/yF8LvZRs/Screenshot-2025-05-05-224503.png)
+- Recall@K:
+![gambar](https://i.ibb.co.com/C31sZJLX/Screenshot-2025-05-05-224623.png)
+
+Interpretasi:
+
+- Precision: Sistem cukup selektif (40% rekomendasi tepat).
+- Recall: Sistem mampu menangkap 67% preferensi pengguna, tetapi masih ada 1 item relevan yang terlewat.
+
+B. **Collaborative Filtering (RMSE)**
+
+Grafik RMSE:
+
+- Training RMSE: Menurun secara stabil dari epoch awal ke akhir, menunjukkan model belajar dengan baik dari data latih.
+- Validation RMSE: Mengikuti tren penurunan yang serupa dengan training RMSE, tanpa overfitting (tidak ada lonjakan nilai).
+- Nilai akhir RMSE stabil di sekitar 0.225–0.275, mengindikasikan error prediksi yang relatif rendah.
+
+Formula RMSE:
+![gambar](https://i.ibb.co.com/xSdmfq7s/Screenshot-2025-05-05-225023.png)
+
+Interpretasi:
+
+- RMSE 0.225 berarti rata-rata kesalahan prediksi rating adalah ±0.225 skala (misalnya, jika rating 1–5, kesalahan ≈ 4.5–5.5%).
+
+| Pertanyaan Evaluasi                          | Collaborative Filtering (RMSE)                                                                                                                                      | Content-Based Filtering (Precision@5 & Recall@5)                                                                                             | Kesimpulan                                                                                                                                          |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1. Apakah sudah menjawab problem statement? | Ya. Model berhasil memprediksi preferensi pengguna berdasarkan rating (rekomendasi buku yang belum dikunjungi). RMSE rendah (0.225) menunjukkan akurasi yang baik. | Ya. Model merekomendasikan buku mirip dengan preferensi pengguna (judul/deskripsi). Precision 40% dan Recall 67% menunjukkan relevansi.     | Kedua teknik menjawab problem statement: personalisasi (content-based) dan prediksi preferensi (collaborative).                                   |
+| 2. Apakah berhasil mencapai goals?          | Ya. Goal merekomendasikan buku "belum dikunjungi" tercapai dengan error minimal (RMSE < 0.3). Generalisasi model baik (training-test konsisten).                  | Sebagian. Goal personalisasi tercapai (2/5 rekomendasi relevan), tetapi recall menunjukkan 1 item relevan terlewat. Perlu optimasi fitur.    | Collaborative unggul dalam prediksi rating, content-based perlu peningkatan cakupan rekomendasi.                                                   |
+| 3. Apakah solusi berdampak bagi bisnis?     | Berdampak tinggi. Meningkatkan engagement pengguna dengan rekomendasi akurat, mengurangi churn, dan potensi meningkatkan penjualan buku.                         | Berdampak moderat. Rekomendasi personalisasi meningkatkan UX, tetapi precision rendah bisa mengurangi kepercayaan pengguna. Perlu tuning.   | Collaborative lebih berdampak langsung pada konversi, sementara content-based perlu integrasi dengan data lebih kaya (e.g., ulasan pengguna).     |
+
+
 
 
 ## Referensi 
