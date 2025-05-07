@@ -134,28 +134,36 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
 - Pada dataset `Books.csv` dan `Users.csv` ada missing value, dan duplikat.
 - `dropna()` untuk menghapus baris dengan missing value.
 - `duplicated().sum()` untuk deteksi.
+- `TfidfVectorizer()` mengubah teks menjadi representasi numerik.
+- `cosine_similarity` mengukur kemiripan antar buku berdasarkan vektor TF-IDF.
 
-| No  | Langkah                   | Tujuan / Alasan                                      |
-|-----|---------------------------|-----------------------------------------------------|
-| 1   | Rename Kolom pada Dataset | Proses ini mengubah nama kolom agar lebih konsisten dan sesuai dengan konvensi penamaan Python (snake_case). |
-| 2   | Sampling Dataset           | Karena ukuran data yang besar, dilakukan pengambilan sebagian data (subset) untuk mempermudah proses eksplorasi dan pemodelan awal.        |
-| 3   | Menghapus Data yang Mengandung Nilai Kosong (NaN)  | Menghapus baris yang memiliki nilai kosong mencegah error atau bias saat analisis dan pemodelan.              |
-| 4   | Mengekstrak Kolom Menjadi List         | Ini memudahkan dalam proses pencocokan informasi buku berdasarkan ISBN atau fitur lainnya pada tahap berikutnya.               |
-| 5   | Membuat Dictionary dari List         | Dictionary ini digunakan untuk menghubungkan ISBN dengan informasi buku seperti judul, penulis, dan tahun terbit.     |
+| No | Langkah                                           | Tujuan / Alasan                                                                                                                                   |
+| -- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1  | Rename Kolom pada Dataset                         | Mengubah nama kolom agar konsisten dan sesuai dengan konvensi penamaan Python (snake\_case).                                                      |
+| 2  | Sampling Dataset                                  | Mengambil sebagian data dari dataset besar untuk mempercepat eksplorasi dan pemodelan awal.                                                       |
+| 3  | Menghapus Data yang Mengandung Nilai Kosong (NaN) | Menghapus baris yang memiliki nilai kosong menggunakan `dropna()` untuk mencegah error atau bias.                                                 |
+| 4  | Mendeteksi dan Menghapus Duplikat                 | Menggunakan `duplicated().sum()` untuk mendeteksi dan menghapus data yang duplikat.                                                               |
+| 5  | Mengekstrak Kolom Menjadi List                    | Mengubah kolom tertentu menjadi list untuk mempermudah manipulasi dan pencocokan data (misalnya ISBN atau judul buku).                            |
+| 6  | Membuat Dictionary dari List                      | Menghubungkan ISBN dengan informasi detail buku seperti judul, penulis, dan tahun terbit.                                                         |
+| 7  | TF-IDF Vectorization                              | Mengubah teks (judul atau metadata buku) menjadi representasi numerik berbobot menggunakan TF-IDF, untuk menangkap pentingnya kata dalam konteks. |
+| 8  | Cosine Similarity Calculation                     | Mengukur kemiripan antar buku berdasarkan vektor TF-IDF untuk digunakan dalam sistem rekomendasi.                                                 |
+
 
 ## Data Preparation (Collaborative Filtering)
 - `Label Encoding` Mengubah ID user dan buku (string/unique identifier) menjadi integer.
-- `Min-Max Scaling` Mengubah skala rating ke range [0, 1].
 - `Random Sampling` Mengacak dataset sebelum dibagi.
+- `Min-Max Scaling` Mengubah skala rating ke range [0, 1]. 
 - `Split 70-30` 70% data latih, 30% data validasi.
 - `Numpy Array Conversion` Mengubah dataframe menjadi array numpy.
 
-| No  | Langkah                   | Tujuan / Alasan                                      |
-|-----|---------------------------|-----------------------------------------------------|
-| 1   | Encoding ID | Mengubah data kategorikal (ID) menjadi numerik untuk diproses model. |
-| 2   | Normalisasi Rating           | Menstabilkan pelatihan model dan memastikan output dalam range yang valid.        |
-| 3   | Pembagian Dataset  | 	Evaluasi model pada data yang tidak pernah dilihat selama pelatihan.              |
-| 4   | Konversi ke Array        | Optimasi komputasi dengan format yang compatible dengan TensorFlow/Keras.        |
+
+| No | Langkah                              | Tujuan / Alasan                                                                  |
+| -- | ------------------------------------ | -------------------------------------------------------------------------------- |
+| 1  | Encoding ID (Label Encoding)         | Mengubah ID user dan ISBN menjadi angka untuk dapat diproses oleh model.         |
+| 2  | Random Sampling (Shuffling) | Mengacak data agar distribusi latih dan validasi merata.  |
+| 3  | Normalisasi Rating (Min-Max Scaling)         | Menstabilkan pelatihan model dan memastikan output berada dalam range \[0, 1].                         |
+| 4  | Split Dataset (70%-30%)              | Membagi data menjadi data latih dan validasi untuk evaluasi model yang objektif. |
+| 5  | Konversi ke Array (Numpy)            | Mengoptimalkan proses komputasi dan kompatibilitas dengan TensorFlow/Keras.      |
 
 
 ## Modeling
