@@ -100,27 +100,27 @@ Pada model kali ini dataset yang digunakan adalah file `Books.csv`, dan `Ratings
 
 ### EDA - Univariate Analysis
 
-![Univariate Analysis](bookpublicationyears.png)
+![Univariate Analysis](https://i.ibb.co.com/VYYhLKkM/bookpublicationyears.png)
 Gambar 1. Analisis Univariat
 - Dominasi era 1980–2005: Sebagian besar buku dalam dataset diterbitkan setelah tahun 1980, dengan puncaknya sekitar tahun 2000. 
 - Jumlah buku meningkat drastis sejak tahun 1980, artinya data buku yang tersedia lebih lengkap atau penerbitan buku memang meningkat di era itu.
 
-![Univariate Analysis](publisherbynumber.png)
+![Univariate Analysis](https://i.ibb.co.com/m5QnRwDZ/publisherbynumber.png)
 Gambar 2. Analisis Univariat
 - Harlequin adalah penerbit paling produktif dalam dataset ini, dengan lebih dari 7.000 buku. Ini menunjukkan Harlequin mendominasi koleksi.
 
 
-![Univariate Analysis](authorsbynumber.png)
+![Univariate Analysis](https://i.ibb.co.com/v6hVh154/authorsbynumber.png)
 Gambar 3. Analisis Univariat
 - Agatha Christie menempati peringkat pertama dengan hampir 600 buku. Ini sangat mungkin karena banyak edisi, terjemahan, atau publikasi ulang karya-karyanya.
 
-![Univariate Analysis](explicitimplisit.png)
+![Univariate Analysis](https://i.ibb.co.com/MyShvs1Z/explicitimplisit.png)
 Gambar 4. Analisis Univariat
 - Mayoritas data rating berasal dari perilaku implisit. Ini umum terjadi karena pengguna sering tidak memberi rating secara manual, tetapi interaksi mereka tetap bernilai.
 
 ### EDA - Multivariate Analysis
 
-![Multivariate Analysis](multivariateanalysis.png)
+![Multivariate Analysis](https://i.ibb.co.com/R4VqFvBK/multivariateanalysis.png)
 Gambar 5. Analisis Multivariat
 - User-ID (kiri atas) :  Distribusi user cukup merata, artinya tidak ada dominasi dari user tertentu. Ini mengindikasikan banyak user aktif memberikan rating, tidak hanya segelintir.
 - Book-Rating (kanan bawah) : Terdapat puncak sangat tinggi di nilai 0, menunjukkan banyak rating 0 — kemungkinan ini adalah rating implisit (tanpa penilaian sebenarnya). Rating lainnya (1–10) tersebar relatif merata, dengan sedikit lonjakan di nilai tinggi (8, 9, 10).
@@ -141,7 +141,7 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
 | 5  | Mengekstrak Kolom Menjadi List                    | Mengubah kolom tertentu menjadi list untuk mempermudah manipulasi dan pencocokan data (misalnya ISBN atau judul buku).                            |
 | 6  | Membuat Dictionary dari List                      | Menghubungkan ISBN dengan informasi detail buku seperti judul, penulis, dan tahun terbit.                                                         |
 | 7  | TF-IDF Vectorization                              | Mengubah teks (judul atau metadata buku) menjadi representasi numerik berbobot menggunakan TF-IDF, untuk menangkap pentingnya kata dalam konteks. |
-| 8  | Cosine Similarity Calculation                     | Mengukur kemiripan antar buku berdasarkan vektor TF-IDF untuk digunakan dalam sistem rekomendasi.                                                 |
+
 
 
 ## Data Preparation (Collaborative Filtering)
@@ -170,7 +170,7 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
        ...])`
 - Fungsi `get_recommendations()` menghasilkan 10 buku teratas dengan judul mirip. 
 - rekomendasi untuk "Cradle and All":
-![gambar](contentbased.png)
+![gambar](https://i.ibb.co.com/rGDZ0JGw/contentbased.png)
 
 - `Kelebihan` : Tidak memerlukan data rating, rekomendasi spesifik berdasarkan konten buku.
 - `Kekurangan` : Tidak mempertimbangkan preferensi pengguna, Terbatas pada kesamaan kata dalam judul.
@@ -188,7 +188,7 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
 - Hasil pelatihan: `Epoch 20/20 - RMSE: 0.2290 (train), 0.3481 (val)`
 - Prediksi rating untuk buku yang belum dibaca oleh user.
 - output untuk user 278194:
-![gambar](collaborativefiltering.png)
+![gambar](https://i.ibb.co.com/N6G2KGNB/collaborativefiltering.png)
 
 ## Evaluation
 Metrik Evaluasi yang Digunakan :
