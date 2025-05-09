@@ -105,7 +105,7 @@ Gambar 1. Analisis Univariat
 - Dominasi era 1980–2005: Sebagian besar buku dalam dataset diterbitkan setelah tahun 1980, dengan puncaknya sekitar tahun 2000. 
 - Jumlah buku meningkat drastis sejak tahun 1980, artinya data buku yang tersedia lebih lengkap atau penerbitan buku memang meningkat di era itu.
 
-![Univariate Analysis](https://i.ibb.co/LdswNQz4/Screenshot-2025-05-05-200429.png)
+![Univariate Analysis](https://i.ibb.co.com/LdswNQz4/Screenshot-2025-05-05-200429.png)
 Gambar 2. Analisis Univariat
 - Harlequin adalah penerbit paling produktif dalam dataset ini, dengan lebih dari 7.000 buku. Ini menunjukkan Harlequin mendominasi koleksi.
 
@@ -131,11 +131,6 @@ Gambar 5. Analisis Multivariat
 ## Data Preparation (Content Based Filtering)
 
 Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling machine learning. Tanpa persiapan yang baik, model cenderung tidak akurat atau tidak stabil karena adanya masalah seperti missing values, ketidakseimbangan data, atau skala data yang berbeda-beda.
-- Pada dataset `Books.csv` dan `Users.csv` ada missing value, dan duplikat.
-- `dropna()` untuk menghapus baris dengan missing value.
-- `duplicated().sum()` untuk deteksi.
-- `TfidfVectorizer()` mengubah teks menjadi representasi numerik.
-- `cosine_similarity` mengukur kemiripan antar buku berdasarkan vektor TF-IDF.
 
 | No | Langkah                                           | Tujuan / Alasan                                                                                                                                   |
 | -- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -150,11 +145,6 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
 
 
 ## Data Preparation (Collaborative Filtering)
-- `Label Encoding` Mengubah ID user dan buku (string/unique identifier) menjadi integer.
-- `Random Sampling` Mengacak dataset sebelum dibagi.
-- `Min-Max Scaling` Mengubah skala rating ke range [0, 1]. 
-- `Split 70-30` 70% data latih, 30% data validasi.
-- `Numpy Array Conversion` Mengubah dataframe menjadi array numpy.
 
 
 | No | Langkah                              | Tujuan / Alasan                                                                  |
@@ -180,7 +170,8 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
        ...])`
 - Fungsi `get_recommendations()` menghasilkan 10 buku teratas dengan judul mirip. 
 - rekomendasi untuk "Cradle and All":
-![gambar](https://i.ibb.co/B0rcWFn/Screenshot-2025-05-05-220507.png)
+![gambar](https://i.ibb.co.com/B0rcWFn/Screenshot-2025-05-05-220507.png)
+
 - `Kelebihan` : Tidak memerlukan data rating, rekomendasi spesifik berdasarkan konten buku.
 - `Kekurangan` : Tidak mempertimbangkan preferensi pengguna, Terbatas pada kesamaan kata dalam judul.
 
