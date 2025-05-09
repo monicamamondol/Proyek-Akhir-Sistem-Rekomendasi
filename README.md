@@ -100,27 +100,27 @@ Pada model kali ini dataset yang digunakan adalah file `Books.csv`, dan `Ratings
 
 ### EDA - Univariate Analysis
 
-![Univariate Analysis](https://i.ibb.co.com/PsjGVmtg/Screenshot-2025-05-05-200402.png)
+![Univariate Analysis](bookpublicationyears.png)
 Gambar 1. Analisis Univariat
 - Dominasi era 1980–2005: Sebagian besar buku dalam dataset diterbitkan setelah tahun 1980, dengan puncaknya sekitar tahun 2000. 
 - Jumlah buku meningkat drastis sejak tahun 1980, artinya data buku yang tersedia lebih lengkap atau penerbitan buku memang meningkat di era itu.
 
-![Univariate Analysis](https://i.ibb.co.com/LdswNQz4/Screenshot-2025-05-05-200429.png)
+![Univariate Analysis](publisherbynumber.png)
 Gambar 2. Analisis Univariat
 - Harlequin adalah penerbit paling produktif dalam dataset ini, dengan lebih dari 7.000 buku. Ini menunjukkan Harlequin mendominasi koleksi.
 
 
-![Univariate Analysis](https://i.ibb.co.com/8nvqG5KK/Screenshot-2025-05-05-200500.png)
+![Univariate Analysis](authorsbynumber.png)
 Gambar 3. Analisis Univariat
 - Agatha Christie menempati peringkat pertama dengan hampir 600 buku. Ini sangat mungkin karena banyak edisi, terjemahan, atau publikasi ulang karya-karyanya.
 
-![Univariate Analysis](https://i.ibb.co.com/7xMC1MCn/Screenshot-2025-05-05-200727.png)
+![Univariate Analysis](explicitimplisit.png)
 Gambar 4. Analisis Univariat
 - Mayoritas data rating berasal dari perilaku implisit. Ini umum terjadi karena pengguna sering tidak memberi rating secara manual, tetapi interaksi mereka tetap bernilai.
 
 ### EDA - Multivariate Analysis
 
-![Multivariate Analysis](https://i.ibb.co.com/fV6M0qxz/Screenshot-2025-05-04-174620.png)
+![Multivariate Analysis](multivariateanalysis.png)
 Gambar 5. Analisis Multivariat
 - User-ID (kiri atas) :  Distribusi user cukup merata, artinya tidak ada dominasi dari user tertentu. Ini mengindikasikan banyak user aktif memberikan rating, tidak hanya segelintir.
 - Book-Rating (kanan bawah) : Terdapat puncak sangat tinggi di nilai 0, menunjukkan banyak rating 0 — kemungkinan ini adalah rating implisit (tanpa penilaian sebenarnya). Rating lainnya (1–10) tersebar relatif merata, dengan sedikit lonjakan di nilai tinggi (8, 9, 10).
@@ -170,7 +170,7 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
        ...])`
 - Fungsi `get_recommendations()` menghasilkan 10 buku teratas dengan judul mirip. 
 - rekomendasi untuk "Cradle and All":
-![gambar](https://i.ibb.co.com/B0rcWFn/Screenshot-2025-05-05-220507.png)
+![gambar](contentbased.png)
 
 - `Kelebihan` : Tidak memerlukan data rating, rekomendasi spesifik berdasarkan konten buku.
 - `Kekurangan` : Tidak mempertimbangkan preferensi pengguna, Terbatas pada kesamaan kata dalam judul.
@@ -188,7 +188,7 @@ Tahap data preparation dilakukan agar data siap digunakan untuk proses modeling 
 - Hasil pelatihan: `Epoch 20/20 - RMSE: 0.2290 (train), 0.3481 (val)`
 - Prediksi rating untuk buku yang belum dibaca oleh user.
 - output untuk user 278194:
-![gambar](https://i.ibb.co.com/WvPwp6Hb/Screenshot-2025-05-05-221409.png)
+![gambar](collaborativefiltering.png)
 
 ## Evaluation
 Metrik Evaluasi yang Digunakan :
