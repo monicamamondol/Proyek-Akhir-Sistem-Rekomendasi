@@ -1,7 +1,7 @@
 # Laporan Proyek Machine Learning - Monica Mamondol
 Ini adalah proyek akhir sistem rekomendasi. Proyek ini membangun model berbasis _content based filtering_ dan _collaborative filtering_ yang dapat menentukan top-N rekomendasi buku.
 ## Project Overview
-![gambar buku](https://i.ibb.co.com/JWXCX65q/Screenshot-2025-05-02-130337.png)
+![gambar buku](https://i.ibb.com/JWXCX65q/Screenshot-2025-05-02-130337.png)
 
 Dalam era digital yang ditandai oleh pertumbuhan pesat informasi dan ragam produk, termasuk buku, pengguna sering kali dihadapkan pada kesulitan dalam menemukan buku yang sesuai dengan minat dan kebutuhannya. Banyaknya pilihan buku yang tersedia di perpustakaan, toko buku daring, maupun platform digital membuat proses pencarian buku menjadi semakin kompleks dan memakan waktu [[1](https://dspace.uii.ac.id/bitstream/handle/123456789/35942/17523144%20Muhammad%20Rizqi%20Az%20Zayyad.pdf?sequence=1)]. Sistem rekomendasi hadir sebagai solusi untuk membantu pengguna dalam memilih buku yang relevan dan sesuai dengan preferensi mereka. Sistem ini merupakan perangkat lunak yang dirancang untuk memberikan saran atau rekomendasi item tertentu-dalam hal ini buku-berdasarkan data preferensi, perilaku, atau riwayat interaksi pengguna sebelumnya [[2](https://bisa.ai/portofolio/detail/MzM4OQ)]. Dengan adanya sistem rekomendasi, pengguna dapat lebih mudah menemukan buku-buku yang mungkin belum mereka ketahui namun berpotensi sesuai dengan minat mereka, sehingga meningkatkan kepuasan dan pengalaman membaca [[3](https://repository.unissula.ac.id/9839/6/BAB%20I_1.pdf)].
 
